@@ -4,68 +4,81 @@
 <meta charset="UTF-8">
 <title>Digital Access Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Neutral informational platform providing access to regional digital services and third-party platforms.">
+<meta name="description" content="Access region-specific online offers available for your country.">
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f6f7f9;
   margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
   color: #222;
 }
+
 .container {
   max-width: 900px;
   margin: 60px auto;
-  padding: 24px;
-  background: #fff;
+  background: #ffffff;
+  padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
-h1 { margin-top: 0; }
-.hidden { display: none; }
 
-.button {
+h1 {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.country-grid, .offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 18px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0 0 8px 0;
+}
+
+.btn {
   display: inline-block;
-  padding: 12px 22px;
+  margin-top: 10px;
+  padding: 10px 16px;
   background: #2563eb;
   color: #fff;
   text-decoration: none;
   border-radius: 6px;
-  margin-top: 12px;
+  font-size: 14px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.card {
-  border: 1px solid #e5e7eb;
-  padding: 16px;
-  border-radius: 8px;
-}
-
-.card a {
-  display: inline-block;
-  margin-top: 8px;
-  color: #2563eb;
-  text-decoration: none;
-  font-weight: bold;
+.btn:hover {
+  background: #1d4ed8;
 }
 
 .back {
-  margin-top: 30px;
+  margin-top: 25px;
   display: inline-block;
   color: #2563eb;
   cursor: pointer;
 }
+
 .footer {
   margin-top: 30px;
   font-size: 12px;
-  color: #666;
+  color: #777;
 }
 </style>
 </head>
@@ -74,94 +87,118 @@ h1 { margin-top: 0; }
 
 <div class="container" id="page-main">
   <h1>Digital Access Hub</h1>
-  <p>A neutral informational platform providing access to regional digital services and third-party solutions.</p>
-  <a class="button" onclick="showPage('countries')">Continue</a>
-  <div class="footer">Informational access only. No guarantees provided.</div>
-</div>
+  <p>
+    This page provides access to online offers available for specific countries.
+    Please select your country to continue.
+  </p>
 
-<div class="container hidden" id="page-countries">
-  <h1>Select Your Region</h1>
-  <p>Choose your country to view available digital services.</p>
-
-  <div class="grid">
-    <div class="card"><strong>United States</strong><br><a onclick="showOffers('us')">View</a></div>
-    <div class="card"><strong>United Kingdom</strong><br><a onclick="showOffers('uk')">View</a></div>
-    <div class="card"><strong>Germany</strong><br><a onclick="showOffers('de')">View</a></div>
-    <div class="card"><strong>Canada</strong><br><a onclick="showOffers('ca')">View</a></div>
-    <div class="card"><strong>Bangladesh</strong><br><a onclick="showOffers('bd')">View</a></div>
-    <div class="card"><strong>Nigeria</strong><br><a onclick="showOffers('ng')">View</a></div>
-    <div class="card"><strong>Pakistan</strong><br><a onclick="showOffers('pk')">View</a></div>
-    <div class="card"><strong>Bulgaria</strong><br><a onclick="showOffers('bg')">View</a></div>
+  <div class="country-grid">
+    <div class="card"><h3>🇺🇸 United States</h3><a class="btn" onclick="openCountry('us')">Continue</a></div>
+    <div class="card"><h3>🇬🇧 United Kingdom</h3><a class="btn" onclick="openCountry('uk')">Continue</a></div>
+    <div class="card"><h3>🇩🇪 Germany</h3><a class="btn" onclick="openCountry('de')">Continue</a></div>
+    <div class="card"><h3>🇨🇦 Canada</h3><a class="btn" onclick="openCountry('ca')">Continue</a></div>
+    <div class="card"><h3>🇧🇩 Bangladesh</h3><a class="btn" onclick="openCountry('bd')">Continue</a></div>
+    <div class="card"><h3>🇳🇬 Nigeria</h3><a class="btn" onclick="openCountry('ng')">Continue</a></div>
+    <div class="card"><h3>🇵🇰 Pakistan</h3><a class="btn" onclick="openCountry('pk')">Continue</a></div>
+    <div class="card"><h3>🇧🇬 Bulgaria</h3><a class="btn" onclick="openCountry('bg')">Continue</a></div>
   </div>
 
-  <div class="back" onclick="showPage('main')">← Back</div>
+  <div class="footer">
+    Informational access only. Availability depends on region.
+  </div>
 </div>
 
 <div class="container hidden" id="page-offers">
-  <h1 id="offers-title"></h1>
-  <p>External platforms and third-party services available for this region.</p>
-  <div class="grid" id="offers-list"></div>
-  <div class="back" onclick="showPage('countries')">← Back</div>
+  <h1 id="country-title"></h1>
+  <p>Select one of the available options below.</p>
+
+  <div class="offer-grid" id="offers"></div>
+
+  <div class="back" onclick="goBack()">← Back to country selection</div>
 </div>
 
 <script>
-const data = {
-us: [
-"71508","74150","73922","74092","71659","74090","71658","73725","74032"
-],
-uk: [
-"72853","73920","73007","73942","73787","73720","73786"
-],
-de: [
-"73906","73916","71593","70951","69974","73895","72176","72849"
-],
-bd: [
-"54747","54746","36521"
-],
-ca: [
-"73002","69665","73914","74037","69339","71850","73394","72819","73744","74036","63051","73003"
-],
-ng: [
-"36518","70075","63319","63318","57893","59807","56776"
-],
-pk: [
-"59478","65522","71995","59479","59477"
-],
-bg: [
-"73990","74022","73945","73989","73988"
-]
+const offersData = {
+  us: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71659"
+  ],
+  uk: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
+  ],
+  de: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73007"
+  ],
+  ca: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73914"
+  ],
+  bd: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
+  ],
+  ng: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=63319"
+  ],
+  pk: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71995"
+  ],
+  bg: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73945"
+  ]
 };
 
-function showPage(p) {
-  document.getElementById('page-main').classList.add('hidden');
-  document.getElementById('page-countries').classList.add('hidden');
-  document.getElementById('page-offers').classList.add('hidden');
-  document.getElementById('page-' + p).classList.remove('hidden');
+const countryNames = {
+  us: "United States",
+  uk: "United Kingdom",
+  de: "Germany",
+  ca: "Canada",
+  bd: "Bangladesh",
+  ng: "Nigeria",
+  pk: "Pakistan",
+  bg: "Bulgaria"
+};
+
+function openCountry(code) {
+  document.getElementById("page-main").classList.add("hidden");
+  document.getElementById("page-offers").classList.remove("hidden");
+
+  document.getElementById("country-title").innerText =
+    "Available Offers for " + countryNames[code];
+
+  const box = document.getElementById("offers");
+  box.innerHTML = "";
+
+  offersData[code].forEach((link, i) => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>Offer ${i + 1}</h3>
+        <p>Available for users in ${countryNames[code]}</p>
+        <a class="btn" href="${link}" target="_blank">Continue</a>
+      </div>
+    `;
+  });
 }
 
-function showOffers(c) {
-  const titles = {
-    us: "Services for United States",
-    uk: "Services for United Kingdom",
-    de: "Services for Germany",
-    ca: "Services for Canada",
-    bd: "Services for Bangladesh",
-    ng: "Services for Nigeria",
-    pk: "Services for Pakistan",
-    bg: "Services for Bulgaria"
-  };
-  document.getElementById('offers-title').innerText = titles[c];
-  const list = document.getElementById('offers-list');
-  list.innerHTML = "";
-  data[c].forEach(id => {
-    list.innerHTML += `
-      <div class="card">
-        <strong>External Platform</strong>
-        <p>Third-party digital service</p>
-        <a href="https://singingfiles.com/show.php?l=0&u=2495941&id=${id}" target="_blank" rel="noopener">Open</a>
-      </div>`;
-  });
-  showPage('offers');
+function goBack() {
+  document.getElementById("page-offers").classList.add("hidden");
+  document.getElementById("page-main").classList.remove("hidden");
 }
 </script>
 
