@@ -4,66 +4,56 @@
 <meta charset="UTF-8">
 <title>Digital Access Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Access region-specific online platforms and digital services.">
+<meta name="description" content="Access country-specific online offers and external platforms.">
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  padding: 0;
-  color: #222;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
 }
 .container {
-  max-width: 960px;
-  margin: 60px auto;
-  background: #fff;
-  padding: 32px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    max-width: 1100px;
+    margin: 60px auto;
+    background: #fff;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
 }
-h1 {
-  margin-top: 0;
-}
+h1 { margin-top: 0; }
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
 }
 .card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
 }
-.card h3 {
-  margin-top: 0;
-}
+.card h3 { margin-top: 0; }
 .btn {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 16px;
-  background: #2563eb;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
 }
-.btn:hover {
-  background: #1e4ed8;
-}
+.btn:hover { background: #1e4fd6; }
 .back {
-  margin-top: 30px;
-  display: inline-block;
-  color: #2563eb;
-  text-decoration: none;
+    display: inline-block;
+    margin-top: 30px;
+    color: #2563eb;
+    cursor: pointer;
 }
-.hidden {
-  display: none;
-}
-.small {
-  font-size: 13px;
-  color: #666;
-  margin-top: 20px;
+.hidden { display: none; }
+.footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #666;
 }
 </style>
 </head>
@@ -71,149 +61,119 @@ h1 {
 <body>
 
 <div class="container" id="page-home">
-  <h1>Digital Access Hub</h1>
-  <p>Select your country to view available online platforms.</p>
+<h1>Digital Access Hub</h1>
+<p>Select your country to view available online offers.</p>
 
-  <div class="grid">
-    <div class="card"><h3>🇺🇸 United States</h3><a class="btn" onclick="openCountry('us')">View platforms</a></div>
-    <div class="card"><h3>🇬🇧 United Kingdom</h3><a class="btn" onclick="openCountry('uk')">View platforms</a></div>
-    <div class="card"><h3>🇩🇪 Germany</h3><a class="btn" onclick="openCountry('de')">View platforms</a></div>
-    <div class="card"><h3>🇨🇦 Canada</h3><a class="btn" onclick="openCountry('ca')">View platforms</a></div>
-    <div class="card"><h3>🇧🇩 Bangladesh</h3><a class="btn" onclick="openCountry('bd')">View platforms</a></div>
-    <div class="card"><h3>🇳🇬 Nigeria</h3><a class="btn" onclick="openCountry('ng')">View platforms</a></div>
-    <div class="card"><h3>🇵🇰 Pakistan</h3><a class="btn" onclick="openCountry('pk')">View platforms</a></div>
-    <div class="card"><h3>🇧🇬 Bulgaria</h3><a class="btn" onclick="openCountry('bg')">View platforms</a></div>
-  </div>
-
-  <div class="small">Informational access only. Availability depends on region.</div>
+<div class="grid">
+<div class="card"><h3>🇺🇸 United States</h3><a class="btn" onclick="openCountry('us')">Continue</a></div>
+<div class="card"><h3>🇬🇧 United Kingdom</h3><a class="btn" onclick="openCountry('uk')">Continue</a></div>
+<div class="card"><h3>🇩🇪 Germany</h3><a class="btn" onclick="openCountry('de')">Continue</a></div>
+<div class="card"><h3>🇨🇦 Canada</h3><a class="btn" onclick="openCountry('ca')">Continue</a></div>
+<div class="card"><h3>🇧🇩 Bangladesh</h3><a class="btn" onclick="openCountry('bd')">Continue</a></div>
+<div class="card"><h3>🇳🇬 Nigeria</h3><a class="btn" onclick="openCountry('ng')">Continue</a></div>
+<div class="card"><h3>🇵🇰 Pakistan</h3><a class="btn" onclick="openCountry('pk')">Continue</a></div>
+<div class="card"><h3>🇧🇬 Bulgaria</h3><a class="btn" onclick="openCountry('bg')">Continue</a></div>
 </div>
 
-<div class="container hidden" id="page-country">
-  <h1 id="country-title"></h1>
-  <div class="grid" id="offers"></div>
-  <a class="back" onclick="goHome()">← Back to country selection</a>
+<div class="footer">Informational access only. Availability depends on region.</div>
+</div>
+
+<div class="container hidden" id="page-offers">
+<h1 id="country-title"></h1>
+<div class="grid" id="offers"></div>
+<div class="back" onclick="goHome()">← Back to country selection</div>
 </div>
 
 <script>
 const data = {
-  us: {
-    title: "Platforms for United States",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71659",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
-    ]
-  },
-  uk: {
-    title: "Platforms for United Kingdom",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73007",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73942",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73787",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73720",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73786"
-    ]
-  },
-  de: {
-    title: "Platforms for Germany",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73916",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71593",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=70951",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=69974",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73895",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=72176",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=72849"
-    ]
-  },
-  bd: {
-    title: "Platforms for Bangladesh",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
-    ]
-  },
-  ca: {
-    title: "Platforms for Canada",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73914",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74037",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=69339",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71850",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73394",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=72819",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73744",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74036",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=63051",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73003"
-    ]
-  },
-  ng: {
-    title: "Platforms for Nigeria",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=63319",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=63318",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=57893",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=59807",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=56776"
-    ]
-  },
-  pk: {
-    title: "Platforms for Pakistan",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=71995",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=59479",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=59477"
-    ]
-  },
-  bg: {
-    title: "Platforms for Bulgaria",
-    links: [
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73945",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73989",
-      "https://singingfiles.com/show.php?l=0&u=2495941&id=73988"
-    ]
-  }
+us: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71659",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
+],
+uk: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73007",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73942",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73787",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73720",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73786"
+],
+de: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73916",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71593",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=70951",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=69974",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73895",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=72176",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=72849"
+],
+bd: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
+],
+ca: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73914",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74037",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=69339",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71850",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73394",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=72819",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73744",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74036",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=63051",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73003"
+],
+ng: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=63319",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=63318",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=57893",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=59807",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=56776"
+],
+pk: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=71995",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=59479",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=59477"
+],
+bg: [
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73945",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73989",
+"https://singingfiles.com/show.php?l=0&u=2495941&id=73988"
+]
 };
 
 function openCountry(code) {
-  document.getElementById("page-home").classList.add("hidden");
-  document.getElementById("page-country").classList.remove("hidden");
-  document.getElementById("country-title").innerText = data[code].title;
-
-  const box = document.getElementById("offers");
-  box.innerHTML = "";
-  data[code].links.forEach(link => {
-    box.innerHTML += `
-      <div class="card">
-        <h3>External Platform</h3>
-        <p>Available for selected region</p>
-        <a class="btn" href="${link}" target="_blank">Open</a>
-      </div>`;
-  });
+document.getElementById("page-home").classList.add("hidden");
+document.getElementById("page-offers").classList.remove("hidden");
+document.getElementById("country-title").innerText = "Available Offers";
+const box = document.getElementById("offers");
+box.innerHTML = "";
+data[code].forEach((url, i) => {
+box.innerHTML += `<div class="card"><h3>Offer ${i+1}</h3><a class="btn" href="${url}" target="_blank">Open</a></div>`;
+});
 }
 
 function goHome() {
-  document.getElementById("page-country").classList.add("hidden");
-  document.getElementById("page-home").classList.remove("hidden");
+document.getElementById("page-offers").classList.add("hidden");
+document.getElementById("page-home").classList.remove("hidden");
 }
 </script>
 
