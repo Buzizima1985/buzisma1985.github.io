@@ -4,55 +4,38 @@
 <meta charset="UTF-8">
 <title>Digital Access Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Access region-specific online offers available for your country.">
-
 <style>
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f6f7f9;
+  margin: 0;
+  padding: 0;
   color: #222;
 }
-
 .container {
   max-width: 900px;
   margin: 60px auto;
-  background: #ffffff;
+  background: #fff;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
-
 h1 {
   margin-top: 0;
 }
-
-.hidden {
-  display: none;
-}
-
-.country-grid, .offer-grid {
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 25px;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 20px;
 }
-
 .card {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-  padding: 18px;
-  transition: 0.2s;
+  padding: 20px;
 }
-
-.card:hover {
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-}
-
 .card h3 {
-  margin: 0 0 8px 0;
+  margin-top: 0;
 }
-
 .btn {
   display: inline-block;
   margin-top: 10px;
@@ -61,144 +44,138 @@ h1 {
   color: #fff;
   text-decoration: none;
   border-radius: 6px;
-  font-size: 14px;
 }
-
 .btn:hover {
-  background: #1d4ed8;
+  background: #1e4ed8;
 }
-
 .back {
-  margin-top: 25px;
+  margin-top: 20px;
   display: inline-block;
   color: #2563eb;
   cursor: pointer;
 }
-
-.footer {
-  margin-top: 30px;
-  font-size: 12px;
-  color: #777;
+.hidden {
+  display: none;
+}
+.note {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container" id="page-main">
-  <h1>Digital Access Hub</h1>
-  <p>
-    This page provides access to online offers available for specific countries.
-    Please select your country to continue.
-  </p>
+<div class="container" id="countries">
+  <h1>Select Your Country</h1>
+  <p>Please choose your country to view available offers.</p>
 
-  <div class="country-grid">
-    <div class="card"><h3>🇺🇸 United States</h3><a class="btn" onclick="openCountry('us')">Continue</a></div>
-    <div class="card"><h3>🇬🇧 United Kingdom</h3><a class="btn" onclick="openCountry('uk')">Continue</a></div>
-    <div class="card"><h3>🇩🇪 Germany</h3><a class="btn" onclick="openCountry('de')">Continue</a></div>
-    <div class="card"><h3>🇨🇦 Canada</h3><a class="btn" onclick="openCountry('ca')">Continue</a></div>
-    <div class="card"><h3>🇧🇩 Bangladesh</h3><a class="btn" onclick="openCountry('bd')">Continue</a></div>
-    <div class="card"><h3>🇳🇬 Nigeria</h3><a class="btn" onclick="openCountry('ng')">Continue</a></div>
-    <div class="card"><h3>🇵🇰 Pakistan</h3><a class="btn" onclick="openCountry('pk')">Continue</a></div>
-    <div class="card"><h3>🇧🇬 Bulgaria</h3><a class="btn" onclick="openCountry('bg')">Continue</a></div>
+  <div class="grid">
+    <div class="card"><h3>United States</h3><a class="btn" onclick="openCountry('us')">View offers</a></div>
+    <div class="card"><h3>United Kingdom</h3><a class="btn" onclick="openCountry('uk')">View offers</a></div>
+    <div class="card"><h3>Germany</h3><a class="btn" onclick="openCountry('de')">View offers</a></div>
+    <div class="card"><h3>Canada</h3><a class="btn" onclick="openCountry('ca')">View offers</a></div>
+    <div class="card"><h3>Bangladesh</h3><a class="btn" onclick="openCountry('bd')">View offers</a></div>
+    <div class="card"><h3>Nigeria</h3><a class="btn" onclick="openCountry('ng')">View offers</a></div>
+    <div class="card"><h3>Pakistan</h3><a class="btn" onclick="openCountry('pk')">View offers</a></div>
+    <div class="card"><h3>Bulgaria</h3><a class="btn" onclick="openCountry('bg')">View offers</a></div>
   </div>
 
-  <div class="footer">
-    Informational access only. Availability depends on region.
-  </div>
+  <div class="note">Informational access only. Availability depends on region.</div>
 </div>
 
-<div class="container hidden" id="page-offers">
-  <h1 id="country-title"></h1>
-  <p>Select one of the available options below.</p>
-
-  <div class="offer-grid" id="offers"></div>
-
+<div class="container hidden" id="offers">
+  <h1 id="countryTitle"></h1>
+  <div class="grid" id="offersGrid"></div>
   <div class="back" onclick="goBack()">← Back to country selection</div>
 </div>
 
 <script>
-const offersData = {
-  us: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=71659"
-  ],
-  uk: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
-  ],
-  de: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73007"
-  ],
-  ca: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73914"
-  ],
-  bd: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
-  ],
-  ng: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=63319"
-  ],
-  pk: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=71995"
-  ],
-  bg: [
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
-    "https://singingfiles.com/show.php?l=0&u=2495941&id=73945"
-  ]
-};
-
-const countryNames = {
-  us: "United States",
-  uk: "United Kingdom",
-  de: "Germany",
-  ca: "Canada",
-  bd: "Bangladesh",
-  ng: "Nigeria",
-  pk: "Pakistan",
-  bg: "Bulgaria"
+const data = {
+  us: {
+    title: "Offers for United States",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=71659"
+    ]
+  },
+  uk: {
+    title: "Offers for United Kingdom",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73007"
+    ]
+  },
+  de: {
+    title: "Offers for Germany",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73916"
+    ]
+  },
+  ca: {
+    title: "Offers for Canada",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=69665"
+    ]
+  },
+  bd: {
+    title: "Offers for Bangladesh",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=54746"
+    ]
+  },
+  ng: {
+    title: "Offers for Nigeria",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=70075"
+    ]
+  },
+  pk: {
+    title: "Offers for Pakistan",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=65522"
+    ]
+  },
+  bg: {
+    title: "Offers for Bulgaria",
+    links: [
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
+      "https://singingfiles.com/show.php?l=0&u=2495941&id=74022"
+    ]
+  }
 };
 
 function openCountry(code) {
-  document.getElementById("page-main").classList.add("hidden");
-  document.getElementById("page-offers").classList.remove("hidden");
+  document.getElementById("countries").classList.add("hidden");
+  document.getElementById("offers").classList.remove("hidden");
+  document.getElementById("countryTitle").innerText = data[code].title;
 
-  document.getElementById("country-title").innerText =
-    "Available Offers for " + countryNames[code];
+  const grid = document.getElementById("offersGrid");
+  grid.innerHTML = "";
 
-  const box = document.getElementById("offers");
-  box.innerHTML = "";
-
-  offersData[code].forEach((link, i) => {
-    box.innerHTML += `
+  data[code].links.forEach(link => {
+    grid.innerHTML += `
       <div class="card">
-        <h3>Offer ${i + 1}</h3>
-        <p>Available for users in ${countryNames[code]}</p>
-        <a class="btn" href="${link}" target="_blank">Continue</a>
+        <h3>Available Offer</h3>
+        <p>External third-party service</p>
+        <a class="btn" href="${link}" target="_blank" rel="noopener">Open</a>
       </div>
     `;
   });
 }
 
 function goBack() {
-  document.getElementById("page-offers").classList.add("hidden");
-  document.getElementById("page-main").classList.remove("hidden");
+  document.getElementById("offers").classList.add("hidden");
+  document.getElementById("countries").classList.remove("hidden");
 }
 </script>
 
