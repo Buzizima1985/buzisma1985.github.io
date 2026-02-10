@@ -1,185 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Digital Access Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Access region-available digital services.">
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background:#f4f6f8;
-    margin:0;
-    padding:0;
-}
-.container {
-    max-width:1000px;
-    margin:60px auto;
-    background:#fff;
-    padding:32px;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-h1 {
-    margin-top:0;
-}
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
-}
-.card {
-    border:1px solid #e0e0e0;
-    border-radius:10px;
-    padding:20px;
-    text-align:center;
-}
-button {
-    padding:12px 18px;
-    background:#2563eb;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:14px;
-}
-button:hover {
-    background:#1e40af;
-}
-.back {
-    margin-top:20px;
-    background:none;
-    color:#2563eb;
-    border:none;
-    cursor:pointer;
-}
-.hidden { display:none; }
-</style>
-</head>
-
-<body>
-<div class="container">
-
-<!-- COUNTRY SELECT -->
-<div id="countries">
-    <h1>Select Your Country</h1>
-    <div class="grid">
-        <button onclick="openCountry('us')">United States</button>
-        <button onclick="openCountry('uk')">United Kingdom</button>
-        <button onclick="openCountry('de')">Germany</button>
-        <button onclick="openCountry('ca')">Canada</button>
-        <button onclick="openCountry('bd')">Bangladesh</button>
-        <button onclick="openCountry('ng')">Nigeria</button>
-        <button onclick="openCountry('pk')">Pakistan</button>
-        <button onclick="openCountry('bg')">Bulgaria</button>
-    </div>
-</div>
-
-<!-- OFFERS -->
-<div id="offers" class="hidden">
-    <h1 id="countryTitle"></h1>
-    <div class="grid" id="offerGrid"></div>
-    <button class="back" onclick="goBack()">← Back</button>
-</div>
-
-</div>
-
 <script>
 const offers = {
-    us: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71659",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
-    ],
-    uk: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73007",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73942",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73787",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73720",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73786"
-    ],
-    de: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73916",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71593",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=70951",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=69974",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73895",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=72176",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=72849"
-    ],
-    bd: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
-    ],
-    ca: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73914",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74037",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=69339",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71850",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73394",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=72819",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73744",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74036",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=63051",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73003"
-    ],
-    ng: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=63319",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=63318",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=57893",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=59807",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=56776"
-    ],
-    pk: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71995",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=59479",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=59477"
-    ],
-    bg: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73945",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73989",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73988"
-    ]
+  us: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73922",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74092",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71659",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74090",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71658",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73725",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74032"
+  ],
+
+  uk: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73007",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73942",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73787",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73720",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73786"
+  ],
+
+  de: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73916",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71593",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=70951",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=69974",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73895",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=72176",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=72849"
+  ],
+
+  bd: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=54746",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=36521"
+  ],
+
+  ca: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=69665",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73914",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74037",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=69339",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71850",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73394",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=72819",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73744",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74036",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=63051",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73003"
+  ],
+
+  ng: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=70075",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=63319",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=63318",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=57893",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=59807",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=56776"
+  ],
+
+  pk: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=65522",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=71995",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=59479",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=59477"
+  ],
+
+  bg: [
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=74022",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73945",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73989",
+    "https://singingfiles.com/show.php?l=0&u=2495941&id=73988"
+  ]
 };
 
-function openCountry(code) {
-    document.getElementById("countries").classList.add("hidden");
-    document.getElementById("offers").classList.remove("hidden");
-    document.getElementById("countryTitle").innerText = "Available Services";
+function openCountry(code, title) {
+  document.getElementById("countries").classList.add("hidden");
+  document.getElementById("offers").classList.remove("hidden");
+  document.getElementById("countryTitle").innerText = title;
 
-    const grid = document.getElementById("offerGrid");
-    grid.innerHTML = "";
+  const grid = document.getElementById("offerGrid");
+  grid.innerHTML = "";
 
-    offers[code].forEach((url, i) => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `<button onclick="window.open('${url}','_blank')">Open Service ${i+1}</button>`;
-        grid.appendChild(div);
-    });
+  offers[code].forEach((url, i) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<button onclick="window.location.href='${url}'">
+      Open Offer ${i + 1}
+    </button>`;
+    grid.appendChild(div);
+  });
 }
 
 function goBack() {
-    document.getElementById("offers").classList.add("hidden");
-    document.getElementById("countries").classList.remove("hidden");
+  document.getElementById("offers").classList.add("hidden");
+  document.getElementById("countries").classList.remove("hidden");
 }
 </script>
-</body>
-</html>
