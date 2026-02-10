@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Digital Access Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Access available online platforms by country.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
@@ -14,146 +13,148 @@ body {
     padding: 0;
     color: #222;
 }
+
 .container {
-    max-width: 900px;
+    max-width: 960px;
     margin: 60px auto;
-    background: #ffffff;
+    background: #fff;
     padding: 32px;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
+
 h1 {
     margin-top: 0;
 }
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
 }
+
 .card {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 20px;
+    text-align: center;
 }
+
 button {
     background: #2563eb;
     color: #fff;
     border: none;
-    padding: 10px 14px;
-    border-radius: 6px;
+    border-radius: 8px;
+    padding: 12px 18px;
     cursor: pointer;
     font-size: 14px;
 }
+
 button:hover {
-    background: #1e4fd8;
+    background: #1e40af;
 }
+
 .back {
-    margin-top: 24px;
-    display: inline-block;
-    cursor: pointer;
+    margin-top: 20px;
     color: #2563eb;
-    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
 }
+
 .hidden {
     display: none;
-}
-.small {
-    font-size: 13px;
-    color: #666;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<!-- COUNTRY SELECT -->
-<div id="countries">
+<div class="container" id="countries">
     <h1>Select Your Country</h1>
-    <p class="small">Please choose your region to continue.</p>
     <div class="grid">
-        <div class="card"><button onclick="openCountry('us')">United States</button></div>
-        <div class="card"><button onclick="openCountry('uk')">United Kingdom</button></div>
-        <div class="card"><button onclick="openCountry('de')">Germany</button></div>
-        <div class="card"><button onclick="openCountry('ca')">Canada</button></div>
-        <div class="card"><button onclick="openCountry('bd')">Bangladesh</button></div>
-        <div class="card"><button onclick="openCountry('ng')">Nigeria</button></div>
-        <div class="card"><button onclick="openCountry('pk')">Pakistan</button></div>
-        <div class="card"><button onclick="openCountry('bg')">Bulgaria</button></div>
+        <button onclick="openCountry('us')">United States</button>
+        <button onclick="openCountry('uk')">United Kingdom</button>
+        <button onclick="openCountry('de')">Germany</button>
+        <button onclick="openCountry('ca')">Canada</button>
+        <button onclick="openCountry('bd')">Bangladesh</button>
+        <button onclick="openCountry('ng')">Nigeria</button>
+        <button onclick="openCountry('pk')">Pakistan</button>
+        <button onclick="openCountry('bg')">Bulgaria</button>
     </div>
 </div>
 
-<!-- OFFERS -->
-<div id="offers" class="hidden">
+<div class="container hidden" id="offers">
     <h1 id="countryTitle"></h1>
     <div class="grid" id="offerGrid"></div>
     <div class="back" onclick="goBack()">← Back</div>
 </div>
 
-</div>
-
 <script>
-const data = {
+const offers = {
     us: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71508",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74150",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73922"
+        "https://example.com/us-1",
+        "https://example.com/us-2",
+        "https://example.com/us-3",
+        "https://example.com/us-4"
     ],
     uk: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=72853",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73920",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73007"
+        "https://example.com/uk-1",
+        "https://example.com/uk-2"
     ],
     de: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73906",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73916",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=71593"
+        "https://example.com/de-1",
+        "https://example.com/de-2",
+        "https://example.com/de-3"
     ],
     ca: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73002",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=69665"
+        "https://example.com/ca-1",
+        "https://example.com/ca-2"
     ],
     bd: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=54747",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=54746"
+        "https://example.com/bd-1",
+        "https://example.com/bd-2",
+        "https://example.com/bd-3"
     ],
     ng: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=36518",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=70075"
+        "https://example.com/ng-1",
+        "https://example.com/ng-2"
     ],
     pk: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=59478",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=65522"
+        "https://example.com/pk-1",
+        "https://example.com/pk-2"
     ],
     bg: [
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=73990",
-        "https://singingfiles.com/show.php?l=0&u=2495941&id=74022"
+        "https://example.com/bg-1"
     ]
+};
+
+const titles = {
+    us: "Available Offers — United States",
+    uk: "Available Offers — United Kingdom",
+    de: "Available Offers — Germany",
+    ca: "Available Offers — Canada",
+    bd: "Available Offers — Bangladesh",
+    ng: "Available Offers — Nigeria",
+    pk: "Available Offers — Pakistan",
+    bg: "Available Offers — Bulgaria"
 };
 
 function openCountry(code) {
     document.getElementById("countries").classList.add("hidden");
     document.getElementById("offers").classList.remove("hidden");
 
-    const titles = {
-        us: "Available Services — United States",
-        uk: "Available Services — United Kingdom",
-        de: "Available Services — Germany",
-        ca: "Available Services — Canada",
-        bd: "Available Services — Bangladesh",
-        ng: "Available Services — Nigeria",
-        pk: "Available Services — Pakistan",
-        bg: "Available Services — Bulgaria"
-    };
-
     document.getElementById("countryTitle").innerText = titles[code];
+
     const grid = document.getElementById("offerGrid");
     grid.innerHTML = "";
 
-    data[code].forEach((url, i) => {
+    offers[code].forEach((url, i) => {
         const div = document.createElement("div");
         div.className = "card";
-        div.innerHTML = `<button onclick="window.location.href='${url}'">Open Service ${i+1}</button>`;
+        div.innerHTML = `
+            <p>Offer ${i + 1}</p>
+            <button onclick="window.location.href='${url}'">Open</button>
+        `;
         grid.appendChild(div);
     });
 }
